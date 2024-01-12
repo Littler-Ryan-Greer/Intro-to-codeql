@@ -33,7 +33,7 @@ def index():
         
     elif year:
         cursor.execute(
-            "SELECT * FROM books WHERE name LIKE '%" + year + "%'"
+            "SELECT * FROM books WHERE name LIKE %s", year
         )
         books = [Book(*row) for row in cursor]
     else:
