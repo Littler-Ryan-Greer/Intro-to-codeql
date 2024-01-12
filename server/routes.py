@@ -10,6 +10,7 @@ def index():
     name = request.args.get('name')
     author = request.args.get('author')
     publisher = request.args.get('publisher')
+    year = request.args.get('year')
     read = bool(request.args.get('read'))
 
     if name:
@@ -26,10 +27,15 @@ def index():
 
     elif publisher:
         cursor.execute(
-            "SELECT * FROM books WHERE name LIKE '%" + publisher + "%'"
+            "SELECT * FROM books WHERE name LIKE %s", publisher
         )
         books = [Book(*row) for row in cursor]
-
+        
+    elif year:
+        cursor.execute(
+            "SELECT * FROM books WHERE name LIKE '%" + year + "%'"
+        )
+        books = [Book(*row) for row in cursor]
     else:
         cursor.execute("SELECT name, author, read FROM books")
         books = [Book(*row) for row in cursor]
