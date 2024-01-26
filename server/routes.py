@@ -11,7 +11,7 @@ def index():
     author = request.args.get('author')
     publisher = request.args.get('publisher')
     year = request.args.get('year')
-    Qty = request.args.get('Qty')
+    inventory = request.args.get('inventory')
     read = bool(request.args.get('read'))
 
     if name:
@@ -39,7 +39,7 @@ def index():
         books = [Book(*row) for row in cursor]
     elif Qty:
         cursor.execute(
-            "SELECT * FROM books WHERE Qty LIKE '%" + Qty + "%'"
+            "SELECT * FROM books WHERE inventory LIKE '%" + inventory + "%'"
         )
         books = [Book(*row) for row in cursor]
     else:
