@@ -9,39 +9,20 @@ from server.models import Book
 def index():
     name = request.args.get('name')
     author = request.args.get('author')
-    publisher = request.args.get('publisher')
-    year = request.args.get('year')
-    inventory = request.args.get('inventory')
     read = bool(request.args.get('read'))
 
     if name:
         cursor.execute(
-            "SELECT * FROM books WHERE name LIKE %s", name
+            "SELECT * FROM books WHERE name LIKE '%" + name + "%'"
         )
         books = [Book(*row) for row in cursor]
 
     elif author:
         cursor.execute(
-            "SELECT * FROM books WHERE author LIKE %s", author
+            "SELECT * FROM books WHERE author LIKE '%" + author + "%'"
         )
         books = [Book(*row) for row in cursor]
 
-    elif publisher:
-        cursor.execute(
-            "SELECT * FROM books WHERE name LIKE %s", publisher
-        )
-        books = [Book(*row) for row in cursor]
-        
-    elif year:
-        cursor.execute(
-            "SELECT * FROM books WHERE name LIKE %s", year
-        )
-        books = [Book(*row) for row in cursor]
-    elif inventory:
-        cursor.execute(
-            "SELECT * FROM books WHERE inventory LIKE '%" + inventory + "%'"
-        )
-        books = [Book(*row) for row in cursor]
     else:
         cursor.execute("SELECT name, author, read FROM books")
         books = [Book(*row) for row in cursor]
