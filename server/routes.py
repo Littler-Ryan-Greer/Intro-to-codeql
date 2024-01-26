@@ -37,7 +37,7 @@ def index():
             "SELECT * FROM books WHERE name LIKE %s", year
         )
         books = [Book(*row) for row in cursor]
-    elif Qty:
+    elif inventory:
         cursor.execute(
             "SELECT * FROM books WHERE inventory LIKE '%" + inventory + "%'"
         )
